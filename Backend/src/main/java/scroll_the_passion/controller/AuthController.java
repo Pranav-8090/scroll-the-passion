@@ -1,4 +1,3 @@
-
 package scroll_the_passion.controller;
 
 import java.util.Map;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +19,6 @@ import scroll_the_passion.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(
-    origins = "http://localhost:5173",
-    allowCredentials = "true"
-)
 public class AuthController {
 
     private final UserRepository userRepository;
@@ -129,6 +123,7 @@ public class AuthController {
             );
         }
 
+        // Create a fresh session after successful authentication.
         HttpSession oldSession = servletRequest.getSession(false);
 
         if (oldSession != null) {
@@ -148,7 +143,7 @@ public class AuthController {
         );
     }
 
-    // GET LOGGED-IN USER
+    // GET CURRENT LOGGED-IN USER
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(
             HttpServletRequest request) {
