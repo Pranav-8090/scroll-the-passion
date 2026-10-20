@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API = "http://localhost:8085/api/reels";
+const API = "https://scroll-the-passion-backend.onrender.com/api/reels";
 
 const reelAPI = axios.create({
   baseURL: API,
@@ -52,7 +52,7 @@ export const getReelVideoUrl = (videoUrl) => {
     ? videoUrl
     : `/${videoUrl}`;
 
-  return `http://localhost:8085${path}`;
+  return `https://scroll-the-passion-backend.onrender.com${path}`;
 };
 
 // Delete a reel (the backend must verify ownership)

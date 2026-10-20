@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 import "./Profile.css";
 
-const API = "http://localhost:8085/api/users/me";
-const REELS_API = "http://localhost:8085/api/reels";
+const API = "https://scroll-the-passion-backend.onrender.com/api/users/me";
+const REELS_API = "https://scroll-the-passion-backend.onrender.com/api/reels";
 
 const emptyProfile = {
   fullName: "",
@@ -47,7 +47,7 @@ function getVideoUrl(reel) {
     return rawUrl;
   }
 
-  return `http://localhost:8085${
+  return `https://scroll-the-passion-backend.onrender.com${
     rawUrl.startsWith("/") ? rawUrl : `/${rawUrl}`
   }`;
 }

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Explore.css";
 
-const API = "http://localhost:8085/api/reels";
+const API = "https://scroll-the-passion-backend.onrender.com/api/reels";
 
 function Explore() {
   const [reels, setReels] = useState([]);
@@ -114,7 +114,7 @@ function Explore() {
             const videoUrl = reel.videoUrl
               ? reel.videoUrl.startsWith("http")
                 ? reel.videoUrl
-                : `http://localhost:8085${
+                : `https://scroll-the-passion-backend.onrender.com${
                     reel.videoUrl.startsWith("/")
                       ? reel.videoUrl
                       : `/${reel.videoUrl}`

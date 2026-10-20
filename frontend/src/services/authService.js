@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API = "http://localhost:8085/api/auth";
+const API = "https://scroll-the-passion-backend.onrender.com/api/auth";
 
 const authAPI = axios.create({
   baseURL: API,

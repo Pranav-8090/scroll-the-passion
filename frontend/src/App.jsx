@@ -501,7 +501,7 @@ function App() {
     async function checkLogin() {
       try {
         const response = await fetch(
-          "http://localhost:8085/api/auth/me",
+            "https://scroll-the-passion-backend.onrender.com/api/auth/me",
           {
             method: "GET",
             credentials: "include",
