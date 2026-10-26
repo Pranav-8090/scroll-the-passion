@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 const API = "https://scroll-the-passion-backend.onrender.com/api/auth";
@@ -16,12 +15,16 @@ export const registerUser = async (userData) => {
     const response = await authAPI.post("/register", userData);
     return response.data;
   } catch (error) {
-    console.error("Register Error:", error.response?.data || error.message);
+    console.error(
+      "Register Error:",
+      error.response?.data || error.message
+    );
+
     throw new Error(
       error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.message ||
-      "Account create failed"
+        error.response?.data?.error ||
+        error.message ||
+        "Account creation failed"
     );
   }
 };
@@ -29,14 +32,23 @@ export const registerUser = async (userData) => {
 export const loginUser = async (loginData) => {
   try {
     const response = await authAPI.post("/login", loginData);
+
+    console.log("Login successful. Response received.");
+
+    // Return the complete response so App.jsx can
+    // process the user and authentication information.
     return response.data;
   } catch (error) {
-    console.error("Login Error:", error.response?.data || error.message);
+    console.error(
+      "Login Error:",
+      error.response?.data || error.message
+    );
+
     throw new Error(
       error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.message ||
-      "Login failed"
+        error.response?.data?.error ||
+        error.message ||
+        "Login failed"
     );
   }
 };
@@ -46,11 +58,16 @@ export const logoutUser = async () => {
     const response = await authAPI.post("/logout");
     return response.data;
   } catch (error) {
-    console.error("Logout Error:", error.response?.data || error.message);
+    console.error(
+      "Logout Error:",
+      error.response?.data || error.message
+    );
+
     throw new Error(
       error.response?.data?.message ||
-      error.message ||
-      "Logout failed"
+        error.response?.data?.error ||
+        error.message ||
+        "Logout failed"
     );
   }
 };

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Mail, Lock } from "lucide-react";
 import { loginUser } from "../services/authService";
@@ -20,6 +19,9 @@ function Login({
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (loading) return;
+
     setError("");
     setLoading(true);
 
@@ -29,9 +31,43 @@ function Login({
         password,
       });
 
-      onLoginSuccess(user);
+      if (!user) {
+        throw new Error("Login response is empty. Please try again.");
+      }
+
+      if (typeof onLoginSuccess === "function") {
+        onLoginSuccess(user);
+      } else {
+        setError("Login succeeded, but the next page could not be opened.");
+      }
     } catch (err) {
-      setError(err.message || "Login failed. Check your credentials.");
+      console.error("Login Error:", err);
+
+      const serverMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.response?.data?.detail;
+
+      if (!err.response) {
+        setError(
+          "Cannot connect to the server. Please check your internet connection and try again."
+        );
+      } else if (err.response.status === 401) {
+        setError(
+          serverMessage ||
+            "Login failed. Your email, password, or authentication may be incorrect."
+        );
+      } else if (err.response.status === 403) {
+        setError(
+          serverMessage ||
+            "Access denied. Please log in again and try once more."
+        );
+      } else {
+        setError(
+          serverMessage ||
+            `Login failed (Error ${err.response.status}). Please try again.`
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -47,15 +83,19 @@ function Login({
         </div>
 
         <h2>Welcome Back!</h2>
+
         <p className="auth-subtitle">
           Login to continue your journey.
         </p>
 
         <form onSubmit={handleSubmit}>
-          <label>Email Address</label>
+          <label htmlFor="login-email">Email Address</label>
+
           <div className="auth-input-wrapper">
             <Mail size={18} />
+
             <input
+              id="login-email"
               type="email"
               value={email}
               onChange={(event) => {
@@ -65,13 +105,17 @@ function Login({
               placeholder="Enter your email"
               autoComplete="email"
               required
+              disabled={loading}
             />
           </div>
 
-          <label>Password</label>
+          <label htmlFor="login-password">Password</label>
+
           <div className="auth-input-wrapper">
             <Lock size={18} />
+
             <input
+              id="login-password"
               type="password"
               value={password}
               onChange={(event) => {
@@ -81,10 +125,15 @@ function Login({
               placeholder="Enter your password"
               autoComplete="current-password"
               required
+              disabled={loading}
             />
           </div>
 
-          {error && <p className="auth-error">{error}</p>}
+          {error && (
+            <p className="auth-error" role="alert">
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
@@ -97,7 +146,11 @@ function Login({
 
         <p className="auth-switch">
           Don't have an account?{" "}
-          <button type="button" onClick={onShowRegister}>
+          <button
+            type="button"
+            onClick={onShowRegister}
+            disabled={loading}
+          >
             Create Account
           </button>
         </p>

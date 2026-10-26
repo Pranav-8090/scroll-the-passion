@@ -38,7 +38,7 @@ public class ReelController {
     @Value("${app.upload.dir:uploads/reels}")
     private String uploadDirectory;
 
-    @Value("${app.frontend.url:http://localhost:5173}")
+    @Value("${app.frontend.url https://scroll-the-passion-frontend.onrender.com }")
     private String frontendUrl;
 
     public ReelController(
@@ -91,8 +91,7 @@ public class ReelController {
     }
 
     private String frontendBackendVideoUrl(Long reelId) {
-        return "http://localhost:8085/api/reels/"
-            + reelId + "/video";
+        return "https://scroll-the-passion-backend.onrender.com/api/reels/" + reelId + "/video";
     }
 
     // 1. Upload a reel
