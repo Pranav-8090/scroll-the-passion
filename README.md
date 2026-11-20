@@ -1,4 +1,4 @@
-# 🎬 Scroll The Passion
+ 🎬 Scroll The Passion
 
 **Scroll The Passion** is a feature-rich, full-stack short-video sharing platform (similar to Instagram Reels) built to showcase modern web development skills using React and Spring Boot.
 
